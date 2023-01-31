@@ -1,0 +1,27 @@
+####
+POST http://localhost:3003/users/create
+Content-Type: application/json
+
+{
+    "name": "Kayo Céshar",
+    "email": "kayo.ceshar@.com",
+    "password": "123456"
+}
+
+###
+
+
+POST http://localhost:3003/post/create
+Content-Type: application/json
+
+{
+    "photo": "Neve",
+    "description": "Primeira vez na neve",
+    "type": "normal",
+    "authorId": "2d23b813-94ea-445b-a156-64ef11849206"
+}
+
+###
+
+GET http://localhost:3003/post/getbyid/ac5cb17d-ec6a-4293-b2bb-2bbb8d1f9ef8
+
