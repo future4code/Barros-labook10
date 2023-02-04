@@ -3,3 +3,8 @@ export interface UserInputDTO {
     email: string,
     password: string
 }
+
+export interface FriendsInputDTO {
+    user1: string,
+    user2: string
+}
