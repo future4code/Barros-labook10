@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { UserInputDTO } from "../model/userDTO";
 import { UserBusiness } from "../business/UserBusiness";
-import { CustomError } from "../error/CustomError";
+
 
 const userBusiness = new UserBusiness();
 
@@ -18,10 +18,10 @@ export class UserController{
             await userBusiness.create(input)
 
             
-         res.status(201).send({ message: "Usuário criado!" })           
+         res.status(201).send({ message: "user created!" })           
       
          } catch (error:any) {
-            throw new CustomError(error.statusCode, error.message)
+            res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
         }
     }
 
@@ -32,7 +32,7 @@ export class UserController{
          res.status(201).send(queryResult)           
       
          } catch (error:any) {
-            throw new CustomError(error.statusCode, error.message)
+            res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
         }
     }
 }

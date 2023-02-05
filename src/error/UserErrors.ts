@@ -13,3 +13,21 @@ export class UserIdNotFound extends CustomError {
         super(404, "User ID not found.")
     }
 }
+
+export class InvalidName extends CustomError{ 
+    constructor(){
+        super(400, "invalid name")
+    }
+}
+
+export class InvalidEmail extends CustomError{ 
+    constructor(){
+        super(400, "invalid Email")
+    }
+}
+
+export class InvalidPassword extends CustomError{ 
+    constructor(){
+        super(400, "invalid password")
+    }
+}

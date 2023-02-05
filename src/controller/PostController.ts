@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { PostBusiness } from "../business/PostBusiness";
-import { CustomError } from "../error/CustomError";
 import { post } from "../model/post";
 import { PostInputDTO } from "../model/postDTO";
 
@@ -20,10 +19,10 @@ export class PostController {
 
             await postBusiness.create(input)
 
-            res.status(201).send({ message: "Post Criado com Sucesso!" })
+            res.status(201).send({ message: "post created successfully!" })
 
    } catch (error:any) {
-      throw new CustomError(error.statusCode, error.message)
+    res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
   }
     }
 
@@ -53,7 +52,7 @@ export class PostController {
       res.status(200).send({ message, post })           
 
    } catch (error:any) {
-      throw new CustomError(error.statusCode, error.message)
+    res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
   }
 
 
@@ -70,7 +69,7 @@ export class PostController {
         res.status(200).send(queryResult)           
   
      }catch (error:any) {
-      throw new CustomError(error.statusCode, error.message)
+      res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
   }
   
   

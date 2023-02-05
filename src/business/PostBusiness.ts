@@ -3,7 +3,6 @@ import { UserDataBase } from "../data/UserDataBase"
 import { CustomError } from "../error/CustomError"
 import { IdNotFound, MissingData, WrongType } from "../error/PostErrors"
 import { UserIdNotFound } from "../error/UserErrors"
-import { post } from "../model/post"
 import { InsertPostDTO, JoinPostDTO, PostInputDTO } from "../model/postDTO"
 import { generateId } from "../services/idGenerator"
 
@@ -35,20 +34,22 @@ export class PostBusiness {
 
       await postDataBase.create(post)
     }catch (error:any) {
-      throw new CustomError(error.statusCode, error.message)
+      throw new CustomError(400, error.message);
   }
     }
 
     public getByid = async (id:string) => {
       try{
-      if(!id){
-        throw new IdNotFound()
-      }
+      
+        if(!id){
+                  throw new IdNotFound()
+               }
            
       const queryResult = await postDataBase.getById(id)
       return queryResult
+      
     }catch (error:any) {
-      throw new CustomError(error.statusCode, error.message)
+      throw new CustomError(400, error.message);
   }
 
     }
@@ -70,7 +71,7 @@ export class PostBusiness {
       const queryResult = await postDataBase.friendsFeed(id)
       return queryResult
     }catch (error:any) {
-      throw new CustomError(error.statusCode, error.message)
+      throw new CustomError(400, error.message);
   }
 
     }
