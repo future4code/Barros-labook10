@@ -8,22 +8,30 @@ Content-Type: application/json
     "password": "123456"
 }
 
-###
+### Criar Post
 
 
 POST http://localhost:3003/post/create
 Content-Type: application/json
 
 {
-    "photo": "Neve",
-    "description": "Primeira vez na neve",
-    "type": "normal",
-    "authorId": "2d23b813-94ea-445b-a156-64ef11849206"
+    "photo": "Londres",
+    "description": "Turistando",
+    "type": "event",
+    "authorId": "adc0970e-8d70-4362-a116-2d011979f814"
 }
 
-###
+### Post by Id
 
 GET http://localhost:3003/post/getbyid/ac5cb17d-ec6a-4293-b2bb-2bbb8d1f9ef8
+
+### Get All Users
+
+GET http://localhost:3003/users/users
+
+### Get All FriendsShip
+
+GET http://localhost:3003/friendship/friendship
 
 
 ### CRiar amizade
@@ -32,10 +40,21 @@ POST http://localhost:3003/friendship/create
 Content-Type: application/json
 
 {
-    "user1": "2d23b813-94ea-445b-a156-64ef11849206",
-    "user2": "c170035c-69db-4875-884b-366d3bac8389"
+    "user1": "ebb44960-5c16-4977-bdcc-7e281b59c395",
+    "user2": "2d23b813-94ea-445b-a156-64ef11849206"
 }
 
-###
-DELETE http://localhost:3003/friendship/friendship/eb629588-51ab-4b0a-822e-08f64915d216
+### deletar
+
+
+DELETE http://localhost:3003/friendship/friendship/bd636e0c-b475-4990-988f-16d95cc0bd1d
+Content-Type: application/json
+
+{
+    "user2": "adc0970e-8d70-4362-a116-2d011979f814"
+}
+
+### Feed
+
+GET http://localhost:3003/post/feed/adc0970e-8d70-4362-a116-2d011979f814
 

@@ -7,3 +7,4 @@ export const postRouter= express.Router();
 
 postRouter.post('/create', postController.create)
 postRouter.get('/getbyid/:id', postController.getById)
+postRouter.get('/feed/:id', postController.friendsFeed)

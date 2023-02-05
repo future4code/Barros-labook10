@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { PostBusiness } from "../business/PostBusiness";
+import { CustomError } from "../error/CustomError";
 import { post } from "../model/post";
 import { PostInputDTO } from "../model/postDTO";
 
@@ -22,10 +23,8 @@ export class PostController {
             res.status(201).send({ message: "Post Criado com Sucesso!" })
 
    } catch (error:any) {
-      let message = error.sqlMessage || error.message
-      res.statusCode = 400
-      res.send({ message })
-   }
+      throw new CustomError(error.statusCode, error.message)
+  }
     }
 
     public getById = async (req: Request, res: Response) => {
@@ -54,11 +53,31 @@ export class PostController {
       res.status(200).send({ message, post })           
 
    } catch (error:any) {
-      let message = error.sqlMessage || error.message
-      res.statusCode = 400
-      res.send({ message })
-   }
+      throw new CustomError(error.statusCode, error.message)
+  }
 
 
     }
+
+
+    public friendsFeed = async (req: Request, res: Response) => {
+      try {
+          const id = req.params.id as string
+  
+          const queryResult = await postBusiness.friendsFeed(id)
+         
+        
+        res.status(200).send(queryResult)           
+  
+     }catch (error:any) {
+      throw new CustomError(error.statusCode, error.message)
+  }
+  
+  
+      }
+
+    
+
+
+
 }
