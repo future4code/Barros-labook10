@@ -33,8 +33,7 @@ export class FriendShipBusiness{
         throw new UserIdNotFound()
       }
 
-        console.log(checkUser1);
-              
+                    
 
       const checkUser2 = allUsers.find(user => user.id === user2)
       
@@ -70,7 +69,7 @@ export class FriendShipBusiness{
       await friendShipDataBase.addFriend(friends)
 
     }catch (error:any) {
-      throw new CustomError(error.statusCode, error.message)
+      throw new CustomError(400, error.message);
   }
     }
 
@@ -94,9 +93,7 @@ export class FriendShipBusiness{
       if(!checkUser1){
         throw new UserIdNotFound()
       }
-
-        console.log(checkUser1);
-              
+                      
 
       const checkUser2 = allUsers.find(user => user.id === user2)
       
@@ -115,11 +112,11 @@ export class FriendShipBusiness{
 
       const id = getFriendships.id
 
-      console.log(id);
+      
       
         await friendShipDataBase.deleteFriend(id)
       } catch (error:any) {
-      throw new CustomError(error.statusCode, error.message)
+        throw new CustomError(400, error.message);
   }    
       
     }
@@ -129,7 +126,7 @@ export class FriendShipBusiness{
         const queryResult = await friendShipDataBase.getAllfriends()
       return queryResult
       }catch (error:any) {
-        throw new CustomError(error.statusCode, error.message)
+        throw new CustomError(400, error.message);
     }
     }
     

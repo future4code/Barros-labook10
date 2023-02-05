@@ -5,8 +5,9 @@ import { CustomError } from "../error/CustomError";
 export class UserDataBase extends BaseDatabase{
     private userTable = 'labook_users'
 
-    public create = async (user: user):Promise<void> => {
+    public create = async (user: user) => {
         try{
+            
             await UserDataBase.connection(this.userTable)
             .insert({
                 id: user.id,
@@ -15,16 +16,16 @@ export class UserDataBase extends BaseDatabase{
                 password: user.password
             })
         }catch(error:any){
-            throw new CustomError(error.statusCode, error.message)
+            throw new CustomError(400, error.message);
         }
     }
 
-    public getAllUsers = async ():Promise<user[]> => {
+    public getAllUsers = async () => {
         try{
             const queryResult = await UserDataBase.connection(this.userTable)    
             return queryResult        
         }catch(error:any){
-            throw new Error(error.message);
+            throw new CustomError(400, error.message);
         }
     }  
 

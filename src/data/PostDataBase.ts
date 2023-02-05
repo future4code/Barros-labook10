@@ -1,12 +1,12 @@
 import { BaseDatabase } from "./BaseDataBase";
-import { InsertPostDTO, JoinPostDTO } from "../model/postDTO";
+import { InsertPostDTO } from "../model/postDTO";
 import { CustomError } from "../error/CustomError";
-import { post } from "../model/post";
+
 
 export class PostDataBase extends BaseDatabase{
     private userTable = 'labook_posts'
 
-    public create = async(post: InsertPostDTO):Promise<void> => {
+    public create = async(post: InsertPostDTO) => {
         try {
            await PostDataBase.connection(this.userTable)
             .insert({
@@ -17,7 +17,7 @@ export class PostDataBase extends BaseDatabase{
                 author_id: post.authorId
             })
         }catch(error:any){
-            throw new CustomError(error.statusCode, error.message)
+            throw new CustomError(400, error.message);
         }
     }
 
@@ -29,13 +29,13 @@ export class PostDataBase extends BaseDatabase{
 
             return queryResult
         }catch(error:any){
-            throw new CustomError(error.statusCode, error.message)
+            throw new CustomError(400, error.message);
         }
     }
 
     
 
-    public friendsFeed = async (id:string):Promise<JoinPostDTO[]> => {
+    public friendsFeed = async (id:string) => {
         try {
             const queryResult:any = await PostDataBase.connection("labook_posts")
            .select("labook_posts.photo", "labook_posts.description","labook_posts.type","labook_posts.created_at", "labook_users.name")
@@ -54,7 +54,7 @@ export class PostDataBase extends BaseDatabase{
      
             return queryResult
         }catch(error:any){
-            throw new CustomError(error.statusCode, error.message)
+            throw new CustomError(400, error.message);
         }
     }
 }

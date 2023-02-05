@@ -1,6 +1,6 @@
 import { UserDataBase } from "../data/UserDataBase"
 import { CustomError } from "../error/CustomError"
-import { MissingData } from "../error/UserErrors"
+import { InvalidEmail, InvalidName, InvalidPassword, MissingData } from "../error/UserErrors"
 import { user } from "../model/user"
 import { UserInputDTO } from "../model/userDTO"
 import { generateId } from "../services/idGenerator"
@@ -17,6 +17,24 @@ export class UserBusiness{
          throw new MissingData
       }
 
+      if (name.length < 4) {
+        throw new InvalidName();
+      }
+
+      if (!email.includes("@")) {
+        throw new InvalidEmail();
+      }
+
+      const allUsers = await userDataBase.getAllUsers()
+
+      const repeatedEmail = allUsers.find((user) => { return user.email === email})
+
+           
+
+      if (repeatedEmail) {
+        throw new InvalidEmail();
+      }
+
       const id: string = generateId()
 
       const user: user = {
@@ -29,17 +47,20 @@ export class UserBusiness{
       
       await userDataBase.create(user)
        }catch (error:any) {
-        throw new CustomError(error.statusCode, error.message)
+        throw new CustomError(400, error.message);
     }     
 
     }
 
     public getAllUsers = async():Promise<user[]> =>{
       try{
-        const queryResult = await userDataBase.getAllUsers()
+        
+      const queryResult = await userDataBase.getAllUsers()
+
       return queryResult
+
       }catch (error:any) {
-            throw new CustomError(error.statusCode, error.message)
+        throw new CustomError(400, error.message);
         }
       
     }

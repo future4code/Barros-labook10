@@ -1,15 +1,15 @@
-####
+#### Create User
+
 POST http://localhost:3003/users/create
 Content-Type: application/json
 
 {
-    "name": "Kayo Céshar",
-    "email": "kayo.ceshar@.com",
+    "name": "Manoel",
+    "email": "manoeld@.com",
     "password": "123456"
 }
 
 ### Criar Post
-
 
 POST http://localhost:3003/post/create
 Content-Type: application/json
@@ -46,7 +46,6 @@ Content-Type: application/json
 
 ### deletar
 
-
 DELETE http://localhost:3003/friendship/friendship/bd636e0c-b475-4990-988f-16d95cc0bd1d
 Content-Type: application/json
 
@@ -54,7 +53,7 @@ Content-Type: application/json
     "user2": "adc0970e-8d70-4362-a116-2d011979f814"
 }
 
-### Feed
 
+### Feed
 GET http://localhost:3003/post/feed/adc0970e-8d70-4362-a116-2d011979f814
 
