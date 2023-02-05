@@ -1,12 +1,13 @@
+import { CustomError } from "../error/CustomError";
 import { friends } from "../model/user";
+import { FriendsDTO, FriendsInputDTO } from "../model/userDTO";
 import { BaseDatabase } from "./BaseDataBase";
 
 export class FriendshipDataBase extends BaseDatabase{
     private userTable = 'labook_friends'
 
-    public addFriend = async (friends: friends) => {
+    public addFriend = async (friends: friends):Promise<void> => {
         try{
-            FriendshipDataBase.connection.initialize()
             await  FriendshipDataBase.connection(this.userTable)
             .insert({
                 id: friends.id,
@@ -14,25 +15,28 @@ export class FriendshipDataBase extends BaseDatabase{
                 user_2_id: friends.user2                
             })
         }catch(error:any){
-            throw new Error(error.message);
-        }finally{
-            console.log("conexão encerrada!");
-            FriendshipDataBase.connection.destroy();
-         }
+            throw new CustomError(error.statusCode, error.message)
+        }
     }
 
-    public deleteFriend = async (id:string) => {
+    public deleteFriend = async (id:string):Promise<void> => {
         try{
-            FriendshipDataBase.connection.initialize()
             await  FriendshipDataBase.connection(this.userTable)
             .where({id})
             .delete()
         }catch(error:any){
-            throw new Error(error.message);
-        }finally{
-            console.log("conexão encerrada!");
-            FriendshipDataBase.connection.destroy();
-         }
+            throw new CustomError(error.statusCode, error.message)
+        }
+    }
+
+    public getAllfriends = async () => {
+        try{            
+            const queryResult = await FriendshipDataBase.connection(this.userTable)
+            return queryResult
+        }catch(error:any){
+            throw new CustomError(error.statusCode, error.message)
+
+        }
     }
 
 

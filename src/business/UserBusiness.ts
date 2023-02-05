@@ -1,17 +1,20 @@
 import { UserDataBase } from "../data/UserDataBase"
+import { CustomError } from "../error/CustomError"
+import { MissingData } from "../error/UserErrors"
 import { user } from "../model/user"
 import { UserInputDTO } from "../model/userDTO"
 import { generateId } from "../services/idGenerator"
 
+const userDataBase = new UserDataBase()
+
 export class UserBusiness{
     
-    public create = async(input: UserInputDTO) => {
-        let message = "Success!"
-      const { name, email, password } = input
+    public create = async(input: UserInputDTO):Promise<void> => {
+       try{
+        const { name, email, password } = input
 
       if (!name || !email || !password) {
-         message = '"name", "email" and "password" must be provided'
-         throw new Error(message)
+         throw new MissingData
       }
 
       const id: string = generateId()
@@ -23,9 +26,22 @@ export class UserBusiness{
         password
       }
 
-      const userDataBase = new UserDataBase()
+      
       await userDataBase.create(user)
+       }catch (error:any) {
+        throw new CustomError(error.statusCode, error.message)
+    }     
 
+    }
+
+    public getAllUsers = async():Promise<user[]> =>{
+      try{
+        const queryResult = await userDataBase.getAllUsers()
+      return queryResult
+      }catch (error:any) {
+            throw new CustomError(error.statusCode, error.message)
+        }
+      
     }
     
 }

@@ -14,3 +14,11 @@ export interface InsertPostDTO {
     type: POST_TYPES,
     authorId: string
 }
+
+export interface JoinPostDTO {
+    photo: string,
+    description: string,
+    type: string,
+    created_at: string,
+    name: string
+}
